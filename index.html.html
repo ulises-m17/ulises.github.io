@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#ffe4c0",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#ffeeda",
+                        "secondary-fixed-dim": "#e9bdae",
+                        "primary-fixed": "#a3f69c",
+                        "inverse-primary": "#88d982",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#261900",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "background": "#fff8f3",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "on-secondary-fixed-variant": "#5e3f35",
+                        "on-primary-fixed-variant": "#005312",
+                        "secondary-fixed": "#ffdbcf",
+                        "tertiary-container": "#8e6700",
+                        "tertiary": "#6f5000",
+                        "primary-container": "#2e7d32",
+                        "surface-variant": "#fedeb0",
+                        "surface-container-highest": "#fedeb0",
+                        "surface-container": "#ffebd2",
+                        "tertiary-fixed": "#ffdea3",
+                        "surface-container-low": "#fff2e3",
+                        "on-surface-variant": "#40493d",
+                        "primary": "#0d631b",
+                        "on-background": "#281800",
+                        "surface-tint": "#1b6d24",
+                        "surface-dim": "#f5d5a8",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#2d150d",
+                        "on-secondary-container": "#79574c",
+                        "tertiary-fixed-dim": "#fdbc13",
+                        "on-primary-container": "#cbffc2",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#bfcaba",
+                        "surface": "#fff8f3",
+                        "secondary": "#79564b",
+                        "on-tertiary-container": "#ffefd7",
+                        "surface-bright": "#fff8f3",
+                        "on-primary-fixed": "#002204",
+                        "outline": "#707a6c",
+                        "on-surface": "#281800",
+                        "secondary-container": "#fed0c1",
+                        "inverse-surface": "#402d0d",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#88d982"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-serif { font-family: 'Noto Serif', serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .organic-shape-1 { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        .organic-shape-2 { border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%; }
+        .organic-shape-3 { border-radius: 50% 50% 30% 70% / 50% 30% 70% 50%; }
+        .editorial-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
+        
+        /* Carousel Styles */
+        .carousel-container { position: relative; width: 100%; height: 100%; overflow: hidden; }
+        .carousel-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease-in-out; }
+        .carousel-slide.active { opacity: 1; z-index: 10; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); padding: 0.75rem; border-radius: 9999px; color: white; transition: all 0.3s; }
+        .carousel-btn:hover { background: rgba(255,255,255,0.4); }
+        .carousel-dots { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 20; display: flex; gap: 0.75rem; }
+        .carousel-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: all 0.3s; }
+        .carousel-dot.active { background: white; transform: scale(1.2); }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#fff8f3]/80 dark:bg-[#1a1c18]/80 backdrop-blur-md shadow-[0px_10px_40px_rgba(40,24,0,0.06)] dark:shadow-none transition-all duration-300">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4 w-full">
+<div class="text-2xl font-serif italic text-[#281800] dark:text-[#f2e0c9] tracking-tight" style="">Huertos M&amp;M</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-xs font-label uppercase tracking-wider text-[#40493d] dark:text-[#c1c9bc] hover:text-[#0d631b] transition-all duration-300" href="#productos" style="">Productos</a>
+<a class="text-xs font-label uppercase tracking-wider text-[#40493d] dark:text-[#c1c9bc] hover:text-[#0d631b] transition-all duration-300" href="#beneficios" style="">Beneficios</a>
+<a class="text-xs font-label uppercase tracking-wider text-[#40493d] dark:text-[#c1c9bc] hover:text-[#0d631b] transition-all duration-300" href="#preguntas-frecuentes" style="">Preguntas Frecuentes</a>
+</div>
+<a class="bg-gradient-to-br from-primary to-primary-container text-white px-6 py-2.5 rounded-lg font-medium text-sm hover:opacity-90 active:scale-95 transition-all duration-300 text-center" href="https://listado.mercadolibre.com.mx/_CustId_533338653?item_id=MLM2545384377&amp;category_id=MLM158043&amp;seller_id=533338653&amp;client=recoview-selleritems&amp;recos_listing=true#origin=upp&amp;component=seller&amp;typeSeller=classic" style="">
+            Comprar ahora
+        </a>
+</div>
+</nav>
+<main class="pt-20">
+<!-- 1. Hero Section -->
+<section class="relative min-h-[921px] flex items-center px-8 overflow-hidden bg-surface">
+<div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="z-10">
+<div class="flex flex-wrap gap-3 mb-8">
+<span class="bg-surface-container-high/50 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-on-secondary-container flex items-center gap-1" style="">
+<span class="material-symbols-outlined text-xs" style="">eco</span> Natural
+                    </span>
+<span class="bg-surface-container-high/50 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-on-secondary-container flex items-center gap-1" style="">
+<span class="material-symbols-outlined text-xs" style="">pets</span> Apto para mascotas
+                    </span>
+<span class="bg-surface-container-high/50 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-on-secondary-container flex items-center gap-1" style="">
+<span class="material-symbols-outlined text-xs" style="">visibility</span> Resultados visibles
+                    </span>
+</div>
+<h1 class="text-5xl md:text-7xl font-serif text-on-background leading-[1.1] mb-6" style="">
+                    Tus plantas no necesitan suerte… necesitan <span class="italic text-primary" style="">lo correcto</span> desde la raíz.
+                </h1>
+<p class="text-lg text-on-surface-variant max-w-xl mb-10 leading-relaxed font-body" style="">
+                    Sustratos, nutrientes y soluciones orgánicas listas para usar que hacen que tus plantas crezcan más fuertes, sin plagas y sin complicarte.
+                </p>
+<div class="flex flex-wrap gap-4">
+<a class="bg-tertiary-fixed text-on-tertiary-fixed px-10 py-4 rounded-lg font-bold text-base shadow-sm hover:opacity-90 active:scale-95 transition-all duration-300 hover:-translate-y-1 hover:brightness-110" href="https://listado.mercadolibre.com.mx/_CustId_533338653?item_id=MLM2545384377&amp;category_id=MLM158043&amp;seller_id=533338653&amp;client=recoview-selleritems&amp;recos_listing=true#origin=upp&amp;component=seller&amp;typeSeller=classic" style="">
+                        Ir a la tienda
+                    </a>
+</div>
+</div>
+<div class="relative lg:h-[600px] rounded-2xl overflow-hidden shadow-2xl bg-black">
+<div class="carousel-container" id="hero-carousel">
+<div class="carousel-slide">
+<img alt="Diapositiva de jardinería 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uhzHENvBOoxg6pzCqRowpecYAt6nKUck3aZiYKBR6p32N6NtjQUwkk-W3R9D_B4etP6YkZXQQmtp1zGc-vRXFNLTF3j7jlvhUYGHiULBE7oaT4znJpID-b8qW608SFr9QefHNkAWVxI2uaWar0sRxBoL28h6k6T0QzGop8e_z0b9LBT29injlKQzP_8qkFXVCxxE4bpINA-0_SO6eG1wQBcUHUJr00OROXP3qgKsI4XnIFIkBS9qVJ_lF0wPkLuT14Z0cim1Kc-QI8" style=""/>
+</div>
+<div class="carousel-slide active">
+<img alt="Diapositiva de jardinería 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uivuvo0IL03z7FWxl_ug94v4nguqjP-G4S6FtIGOhq51GBSnHPZLEVsTXHIlnkL0zim2cqqfDcadTfS7q1TkOe4qxlLVhnpXqpahUNkRdEPDES8fVdjFfYV1DfpGJO69VEiXxxO5tuIODSjxbOaJXyQMGLCVImzLs73uxrF1si2hHQ4I20Dzk93X-OgFaQ6Gs1jsK239zfn8_vQWKyJ3lzLt5BhywzG2pF2_MvgjIQmId2legdRgLmG5ecRVDnVcqa1VAbuhp9eqcQ" style=""/>
+</div>
+<div class="carousel-slide">
+<img alt="Diapositiva de jardinería 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ug__zOqr4MEhlKE1k2-5bkBIsGlzgg1FFb0U2G9W5DvdP4yM5m-NzNA3nYjwe85nDUCcGxgSkPb-mfXSyHKi7AeNujoajHYxEhGxOPxn66ditQyNpbfLCK7K8XPgl67BznUyLCXPmp4hAQuQTHR9QAibl4mDsl2S5wW1KwpL64KnWfFLkK-DYX3Mz9ekpEJtdozEOOYbUEzgdlODLV20AtmHI6BcfCD0Uy21fGQLEMRUetg0LZL1n1cxHG1LCuCnZh3LF81NUukbrE" style=""/>
+</div>
+<!-- Navegación -->
+<button class="carousel-btn left-4" onclick="moveSlide(-1)" style="">
+<span class="material-symbols-outlined" style="">chevron_left</span>
+</button>
+<button class="carousel-btn right-4" onclick="moveSlide(1)" style="">
+<span class="material-symbols-outlined" style="">chevron_right</span>
+</button>
+<!-- Puntos -->
+<div class="carousel-dots">
+<div class="carousel-dot" onclick="setSlide(0)"></div>
+<div class="carousel-dot active" onclick="setSlide(1)"></div>
+<div class="carousel-dot" onclick="setSlide(2)"></div>
+</div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none z-[15]"></div>
+</div>
+</div>
+</section>
+<script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        function updateCarousel() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function moveSlide(direction) {
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        function setSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        // Avance automático
+        setInterval(() => moveSlide(1), 5000);
+    </script>
+<!-- 2. Sección Problema -->
+<section class="py-24 bg-surface-container-low px-8">
+<div class="max-w-4xl mx-auto text-center">
+<span class="material-symbols-outlined text-primary text-5xl mb-6" style="">potted_plant</span>
+<h2 class="text-3xl md:text-4xl font-serif text-on-background leading-snug" style="">
+                Si tus plantas no crecen, se ponen amarillas, tienen plagas o mueren tras un trasplante… <span class="text-secondary italic underline decoration-secondary/30" style="">no es tu culpa.</span>
+</h2>
+<p class="mt-8 text-xl text-on-surface-variant font-medium" style="">Es el sustrato y la nutrición.</p>
+</div>
+</section>
+<!-- 3. Editorial Catalog Section -->
+<section class="py-32 px-8 bg-surface-bright overflow-hidden" id="productos">
+<div class="max-w-7xl mx-auto">
+<div class="mb-24 text-center md:text-left">
+<h2 class="text-5xl md:text-7xl font-serif text-on-background mt-4 leading-none" style="">Soluciones reales para plantas sanas y fuertes</h2>
+</div>
+<!-- CATEGORÍA 1: BASE Y SUSTRATOS -->
+<div class="mb-32">
+<div class="flex items-end gap-6 mb-12 border-b border-outline-variant/30 pb-4">
+<h3 class="text-4xl font-serif italic text-primary" style="">Base y Sustratos</h3>
+<span class="text-xs font-label text-on-surface-variant opacity-60 uppercase mb-1 tracking-widest" style="">Cimientos Orgánicos</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Producto 1 -->
+<div class="bg-tertiary/5 p-12 rounded-[3rem] border border-tertiary/10 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+<div class="w-48 h-48 bg-white rounded-3xl overflow-hidden shadow-xl flex-shrink-0">
+<img alt="Sustrato Premium" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ug6V0t0VCFHVxFof-fMDQVk88RHVlgYc1grZKv4VSvUwQKNxB89pyKN2Qd-JaGc2us-VIHzQJDREQZNy9B32fsecjww8eDMeCiqof1ykPWvGH4FrY6Ge1GE8GDyJF2_SP8QRGU8uYkw7OtjMev4D0DCCJOLBE3q9yDFzpJp1wmWBnYUBOKUXBwysAAF9ez89x7gFhrjqvKR-yqwvL5ON--HALF_ypwSrBEpRIq_jFOwa5T7m1ouGXtSb9Np4B90JEmGauuQDsO7cw" style=""/>
+</div>
+<div>
+<h4 class="text-2xl font-serif mb-4" style="">Sustrato Premium Humus+Minerales 3L</h4>
+<p class="text-on-surface-variant mb-8" style="">Equilibrio perfecto de aireación y nutrición para todo tipo de plantas.</p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-sm duration-300 hover:-translate-y-1 hover:brightness-110" href="https://www.mercadolibre.com.mx/sustrato-premium-de-plantas-humusminerales-listo-p-usar-3l/up/MLMU474087215?pdp_filters=item_id:MLM2072746755">Ver más</a>
+</div>
+</div>
+<!-- Producto 2 -->
+<div class="bg-secondary/5 p-12 rounded-[3rem] border border-secondary/10 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+<div class="w-48 h-48 bg-white rounded-3xl overflow-hidden shadow-xl flex-shrink-0">
+<img alt="Sustrato Orquídeas" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uh_jPd4lykHz1WPW0RfAXJGAfc8W3iGj0baDelbdq1SJyKvYxhBCOcpU5bZyPPkmSHJXxDdFNC-OJqsRPFUPTUE47_8-HTO0fCB-AcbW4SpzuRGDpRxWBV8VYWIKa2UAUKtvWGRqhT9a4O9olyx4keTkqCSTlZHthelP1sUmQnrVrw8dToVwrzy0QZhLXqZqAptP2WgFuHvV01oLVWtQkQR56E6hwl66JGumg2eMyZ18rkHIZV8z368DDBZ6Wgi2DMm3xRnnHe5zXo" style=""/>
+</div>
+<div>
+<h4 class="text-2xl font-serif mb-4" style="">Sustrato Orquídeas Profesional Nutritivo 1kg</h4>
+<p class="text-on-surface-variant mb-8" style="">Textura ideal para raíces epífitas que buscan oxigenación máxima.</p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-sm duration-300 hover:-translate-y-1 hover:brightness-110" href="https://www.mercadolibre.com.mx/sustrato-premium-de-plantas-humusminerales-listo-p-usar-3l/up/MLMU474087215?pdp_filters=item_id:MLM2072746755">Ver más</a>
+</div>
+</div>
+<!-- Producto 3 -->
+<div class="bg-tertiary/5 p-12 rounded-[3rem] border border-tertiary/10 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+<div class="w-48 h-48 bg-white rounded-3xl overflow-hidden shadow-xl flex-shrink-0">
+<img alt="Fibra de Coco" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ujkUqPB50Tf6Q84IJQx68aN1iRUFHudvexdBS6pE74ok8q6ibI0hmd3jb2WDurtK-f4S7zZrtfJAXaUHYz3yOq3bpWWpFrykCwQWTuM8pl9QJBrtmvUyzEVogsv3T0kSivkb4jr4M4XPJW4xpaXFcm_CvM5xJH00XmvC9nMSfQRxJ95oG-MclOoN4M2E9zWIdHAJHU7BkYbpBaZWEKpwnDcUCe3W6ouReKLpOMGqHGZcxr8Hai_juGQVIu-BfUUOIBPPiA1XQIsVY0" style=""/>
+</div>
+<div>
+<h4 class="text-2xl font-serif mb-4" style="">Fibra de Coco Premium 3L 320g</h4>
+<p class="text-on-surface-variant mb-8" style="">Sustentable y altamente absorbente. Mejora la estructura de cualquier suelo.</p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-sm duration-300 hover:-translate-y-1 hover:brightness-110" href="https://www.mercadolibre.com.mx/sustrato-premium-de-plantas-humusminerales-listo-p-usar-3l/up/MLMU474087215?pdp_filters=item_id:MLM2072746755">Ver más</a>
+</div>
+</div>
+</div>
+</div>
+<!-- CATEGORÍA 2: NUTRICIÓN Y CRECIMIENTO -->
+<div class="mb-32">
+<div class="flex items-center justify-between mb-12 border-b border-outline-variant/30 pb-4">
+<h3 class="text-4xl font-serif italic text-primary" style="">Nutrición y Crecimiento</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Producto 4 -->
+<div class="bg-secondary/5 p-12 rounded-[3rem] border border-secondary/10 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+<div class="w-48 h-48 bg-white rounded-3xl overflow-hidden shadow-xl flex-shrink-0">
+<img alt="Humus" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ugIhnM-hWY4zKxENAq7_PG7vAkulnu-pdstHWrhoj53kIqoIP4jB6_m79DKHukWqmXIk3jfVHeS0_Nqg0RUNPOptF3j8iVwphnL0r_TASH1eXusKehGKlHR6P5wz75-JX5EeWrgnP7npd8MA87TE10WdIAa1DSgROzyyI0za22-y3vH4Z0UeO7UgLKVW4Fsuquxs82YdCGHRKWoc0loFNnYOgKDuM6UfPvWMuUCsEKm8c-S6r0B2P6CLRlQR6nPRegRAhDpcApMf-g" style=""/>
+</div>
+<div>
+<h4 class="text-2xl font-serif mb-4" style="">Humus de Lombriz Fertilizante Natural 3L</h4>
+<p class="text-on-surface-variant mb-8" style="">Fertilizante natural cargado de microorganismos vivos.</p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-sm duration-300 hover:-translate-y-1 hover:brightness-110" href="https://www.mercadolibre.com.mx/sustrato-premium-de-plantas-humusminerales-listo-p-usar-3l/up/MLMU474087215?pdp_filters=item_id:MLM2072746755">Ver más</a>
+</div>
+</div>
+<!-- Producto 5 -->
+<div class="bg-tertiary/5 p-12 rounded-[3rem] border border-tertiary/10 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+<div class="w-48 h-48 bg-white rounded-3xl overflow-hidden shadow-xl flex-shrink-0">
+<img alt="Humus Líquido" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ujaOJsRV5LM8QMZXART7QlKnXOwo6fqgcRUq62A6SMhivrEcLNl3N0SUYuQZTT-t597jh-GoTQSrmH_jFBwXPyEwdcJjSN5B0OyiGiTX6gzH4-bP2_JODIRhOuAc43Od864Lj4P0a4mZVxV3LOwUuefcaMx9185_DH31H6v-THnJQEG9qSsjP5bH98lyhSVe5NrQwDDJk4crvsEaDhrr-9ZbDaBDUiX4SxKaHyy7V5T166Jdo-Cf6reSUtDCCNzzAyGs_L7NhW7dQ" style=""/>
+</div>
+<div>
+<h4 class="text-2xl font-serif mb-4" style="">Humus Líquido Orgánico Atomizador 1L</h4>
+<p class="text-on-surface-variant mb-8" style="">Absorción inmediata para un verde más intenso.</p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-sm duration-300 hover:-translate-y-1 hover:brightness-110" href="https://www.mercadolibre.com.mx/sustrato-premium-de-plantas-humusminerales-listo-p-usar-3l/up/MLMU474087215?pdp_filters=item_id:MLM2072746755">Ver más</a>
+</div>
+</div>
+<!-- Producto 6 -->
+<div class="bg-secondary/5 p-12 rounded-[3rem] border border-secondary/10 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+<div class="w-48 h-48 bg-white rounded-3xl overflow-hidden shadow-xl flex-shrink-0">
+<img alt="Alimento Orquídeas" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ujdHbmATUWtJ5hcRCWC4xYVHiqcHpBai6m4dLh3xF0rOaiEje0iVPNA1mM5HDtK3OpxXCZ6_ZQnFYWUC99QUI7Kn6RLpNc-VUCINJz7SivS3NGhi7jjthzj_ui04wV7R1EP4j93vd1oaG0C5xh_jUto7MeV7aBG2RjbBd96Aajz4IB4RT-qSNvDs4v-EyTB7-jRBVSTcShrzEjf7P_WtGB9KiMvkhYazFdOdxe9rb333Qrcsu4Mm6bE_tN1ZZnrypGjaTvdC1hhzUk" style=""/>
+</div>
+<div>
+<h4 class="text-2xl font-serif mb-4" style="">Alimento Líquido Premium para Orquídeas 400ml</h4>
+<p class="text-on-surface-variant mb-8" style="">Fórmula premium para floraciones espectaculares.</p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-sm duration-300 hover:-translate-y-1 hover:brightness-110" href="https://www.mercadolibre.com.mx/sustrato-premium-de-plantas-humusminerales-listo-p-usar-3l/up/MLMU474087215?pdp_filters=item_id:MLM2072746755">Ver más</a>
+</div>
+</div>
+<!-- Producto 7 -->
+<div class="bg-tertiary/5 p-12 rounded-[3rem] border border-tertiary/10 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+<div class="w-48 h-48 bg-white rounded-3xl overflow-hidden shadow-xl flex-shrink-0">
+<img alt="Enraizante" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ujatYnOoSsXwNoTQjY_fmLbe4kIzzyGW3z6NJjESBEiY5aW8UEcz0uqnw2RtAcycOqK3K9Z9mI88b2zuLifl6Z3LpNxHzF5bbR0_lPh3p4Qtdg42TgN-x7qvmXW2ph2rxeD3Qs0sPW-TXQkMQn4xbChkOC5i2Nh9D1xzeGCmMBHQAIoxEB9FERXuOdyvSM7pQrQjyTOGu-NDUzzHQO-a_or75H7KMlHolnR7oG4zrwBqJ49EeCE0Q6OCobhEXI3qTr5A4rL4R4E1Q" style=""/>
+</div>
+<div>
+<h4 class="text-2xl font-serif mb-4" style="">Enraizante Huertos M&amp;M con Micorrizas</h4>
+<p class="text-on-surface-variant mb-8" style="">Desarrolla un sistema radicular masivo gracias a la simbiosis orgánica.</p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-sm duration-300 hover:-translate-y-1 hover:brightness-110" href="https://www.mercadolibre.com.mx/sustrato-premium-de-plantas-humusminerales-listo-p-usar-3l/up/MLMU474087215?pdp_filters=item_id:MLM2072746755">Ver más</a>
+</div>
+</div>
+</div>
+</div>
+<!-- CATEGORÍA 3: PROTECCIÓN Y CONTROL DE PLAGAS -->
+<div class="mb-32">
+<div class="flex items-end gap-6 mb-12 border-b border-outline-variant/30 pb-4">
+<h3 class="text-4xl font-serif italic text-on-surface" style="">Protección y Control de Plagas</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Producto 8 -->
+<div class="bg-secondary/5 p-12 rounded-[3rem] border border-secondary/10 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+<div class="w-48 h-48 bg-white rounded-3xl overflow-hidden shadow-xl flex-shrink-0">
+<img alt="Insecticida 250ml" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uiT8DyXTRCcIkTLIF1bFPvFE8tSbxxgFUSeLLHAqOcbEi2RONfQ1bOAv7hZT3bvdzEdsj_Vjl1f62evUIpNB3ogr7pDDNQPMvZHufLEfBwvMt1fx8_qoGM3x0bqdKhPV0SMnVpKaOSun61QNxYBq5Q7WnSanaihFV5G0eZDgNxHbAupbZXiuGHr0tAEZt93OWbQrjTFNfwQi17DjrK6coVPIRWTTPjYDwZzzKmg7bIE2f_HwWmSajKxI2yMo1_RNe22pnLM_oZznd8" style=""/>
+</div>
+<div>
+<h4 class="text-2xl font-serif mb-4" style="">Insecticida Orgánico 250ml Jabón Potásico + Neem</h4>
+<p class="text-on-surface-variant mb-8 italic" style="">Control total sin tóxicos.</p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-sm duration-300 hover:-translate-y-1 hover:brightness-110" href="https://www.mercadolibre.com.mx/sustrato-premium-de-plantas-humusminerales-listo-p-usar-3l/up/MLMU474087215?pdp_filters=item_id:MLM2072746755">Ver más</a>
+</div>
+</div>
+<!-- Producto 9 -->
+<div class="bg-tertiary/5 p-12 rounded-[3rem] border border-tertiary/10 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+<div class="w-48 h-48 bg-white rounded-3xl overflow-hidden shadow-xl flex-shrink-0">
+<img alt="Insecticida 1L" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uhAP1vyIeGrn2FBgiRnNRHKDmUmLzjwsKLsXpwK9N14pTxYEB3oHrDluAh2mOltNGtZkmNqiEGoYmeTj3PvqH8gsZJqPuFBae1RIIExyYUivMLFh0xPqjDUS5V51JhjNnFP7ltGVbaO8GOKVCs523utDT_Clg0zNTldyosHmNr-R1lceBXI7vZV3DW2groS7hmus1ebwEnvVtAA4p0gb3wpXzB5c51Tr7mtRn0a3OYh78G2GQWlHg41jy9LJRRWc99TMGCmQqAjAAs" style=""/>
+</div>
+<div>
+<h4 class="text-2xl font-serif mb-4" style="">Insecticida Orgánico 1L Jabón Potásico + Neem</h4>
+<p class="text-on-surface-variant mb-8 italic" style="">Formato familiar para mantener todo tu huerto sano.</p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-sm duration-300 hover:-translate-y-1 hover:brightness-110" href="https://www.mercadolibre.com.mx/sustrato-premium-de-plantas-humusminerales-listo-p-usar-3l/up/MLMU474087215?pdp_filters=item_id:MLM2072746755">Ver más</a>
+</div>
+</div>
+</div>
+</div>
+<!-- CATEGORÍA 4: CULTIVO Y NATURALEZA -->
+<div>
+<div class="flex items-end gap-6 mb-12 border-b border-outline-variant/30 pb-4">
+<h3 class="text-4xl font-serif italic text-secondary" style="">Cultivo y Naturaleza</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Producto 10 -->
+<div class="bg-secondary/5 p-12 rounded-[3rem] border border-secondary/10 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+<div class="w-48 h-48 bg-white rounded-3xl overflow-hidden shadow-xl flex-shrink-0">
+<img alt="Semillas Amaranto" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ujZ4xUDIWFhDxnmZoAyejyVaiLlVy5_YHdsSiQengr3GtadmYDmaUcG3Hr1OTVtx5LS4Jd59XsTK__1v96Bs9tT6iV354WNrM8lMpmm0z4ZNOhazH6eka5HoOtX2Daa1P1LdcBDslguPF8eztXc0-zSIgYH12diT2Xt3lrl_ewLZoppNpuxBxQoZjpwOw_sLRv_c1-B1ggE05_-lUpfVwGYtICtJxfpfOx1BqcLq3lFT4MNZxQTj6WlyYW5BryvWiwLXIia_pFi2NU" style=""/>
+</div>
+<div>
+<h4 class="text-2xl font-serif mb-4" style="">Semillas Ecológicas de Amaranto para Germinado</h4>
+<p class="text-on-surface-variant mb-8" style="">Ideales para germinados nutritivos en casa. 100% naturales.</p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-sm duration-300 hover:-translate-y-1 hover:brightness-110" href="https://www.mercadolibre.com.mx/sustrato-premium-de-plantas-humusminerales-listo-p-usar-3l/up/MLMU474087215?pdp_filters=item_id:MLM2072746755">Ver más</a>
+</div>
+</div>
+<!-- Producto 11 -->
+<div class="bg-tertiary/5 p-12 rounded-[3rem] border border-tertiary/10 flex flex-col md:flex-row items-center gap-12 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+<div class="w-48 h-48 bg-white rounded-3xl overflow-hidden shadow-xl flex-shrink-0">
+<img alt="Casa Nido" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ug8SArjDn8Vy_2p_nIxoacYM-w96y99CV3q9aF05NzXmJkEX9QdKhz32FuqPQWlzHbLcD9qqi4XJXut-VxM_4H6MyM3p8KdJ7bxUX7r-Ktl0U9Jh3SEM0j_F52dTK_-RHF0LOb2TUUbxPy8DIAlD28q_pAsZNNGnw2rCY_GXQzUs6XFD30nVkEZ5slrXyUKERew-PAudAD2YDCOWGsXiQl4Ph1reEP_EGOLms6g9gED_jQ6S2hZsJdnNOCBd52n_OqklTWnrbsSo48" style=""/>
+</div>
+<div>
+<h4 class="text-2xl font-serif mb-4" style="">Casa Nido de Aves Artesanal Huertos M&amp;M</h4>
+<p class="text-on-surface-variant mb-8" style="">Fomenta la biodiversidad en tu jardín con refugios hechos a mano.</p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-sm duration-300 hover:-translate-y-1 hover:brightness-110" href="https://www.mercadolibre.com.mx/sustrato-premium-de-plantas-humusminerales-listo-p-usar-3l/up/MLMU474087215?pdp_filters=item_id:MLM2072746755">Ver más</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Sección Solución -->
+<section class="relative py-32 overflow-hidden bg-primary text-on-primary px-8">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="relative rounded-2xl overflow-hidden aspect-square lg:aspect-video shadow-2xl">
+<img alt="Sistema de raíces" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ujzGvtUWzNBsBuyy453Lci6zWUhgQJyFylo8UArpcKMXGVI48iU7lKktH8SjTtR0c6eam3AfiJog0hwunb8hFGvoeAmChgb11f-Ay10zC7sqggx-_EHpGGS-vSCLhekRYJoTeAS8aOruGpLLz_4LtE07L7UdKCGGBdpvoxI8fuumq7EkjQEPX_86hqimb9-baL1j9rj8vXMdX94ZApg2H10c2HCc6xuikU8MD_iAyyCHsNrTVywRmwd1L0_dfxq0kp_04VbqZG6ig" style=""/>
+</div>
+<div>
+<h2 class="text-4xl md:text-5xl font-serif mb-8 leading-tight" style="">
+                    En Huertos M&amp;M no vendemos tierra.
+                </h2>
+<p class="text-xl text-on-primary-container leading-relaxed mb-8" style="">
+                    Creamos un sistema completo para que tus plantas crezcan fuertes desde la raíz, emulando los ciclos naturales del bosque en tu propia casa.
+                </p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 bg-primary-container/20 p-4 rounded-xl">
+<span class="material-symbols-outlined text-primary-fixed" style="">verified</span>
+<span class="font-medium" style="">Nutrición orgánica certificada</span>
+</div>
+<div class="flex items-center gap-4 bg-primary-container/20 p-4 rounded-xl">
+<span class="material-symbols-outlined text-primary-fixed" style="">biotech</span>
+<span class="font-medium" style="">Fórmulas optimizadas científicamente</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Benefits Section -->
+<section class="py-24 bg-surface-container-low px-8" id="beneficios">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+<div class="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm">
+<span class="material-symbols-outlined text-primary text-4xl mb-4" style="">eco</span>
+<h5 class="font-serif text-lg mb-2" style="">Plantas más verdes</h5>
+<p class="text-xs text-on-surface-variant" style="">Clorofila al máximo con nutrientes reales.</p>
+</div>
+<div class="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm">
+<span class="material-symbols-outlined text-primary text-4xl mb-4" style="">pest_control</span>
+<h5 class="font-serif text-lg mb-2" style="">Menos plagas</h5>
+<p class="text-xs text-on-surface-variant" style="">Protección natural desde el interior.</p>
+</div>
+<div class="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm">
+<span class="material-symbols-outlined text-primary text-4xl mb-4" style="">bolt</span>
+<h5 class="font-serif text-lg mb-2" style="">Resultados en días</h5>
+<p class="text-xs text-on-surface-variant" style="">Eficacia orgánica de rápida absorción.</p>
+</div>
+<div class="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm">
+<span class="material-symbols-outlined text-primary text-4xl mb-4" style="">handyman</span>
+<h5 class="font-serif text-lg mb-2" style="">Fácil de usar</h5>
+<p class="text-xs text-on-surface-variant" style="">Listos para aplicar sin mezclas raras.</p>
+</div>
+<div class="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm">
+<span class="material-symbols-outlined text-primary text-4xl mb-4" style="">school</span>
+<h5 class="font-serif text-lg mb-2" style="">Para principiantes</h5>
+<p class="text-xs text-on-surface-variant" style="">No necesitas ser experto para tener éxito.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ -->
+<section class="py-24 bg-surface-container-low px-8" id="preguntas-frecuentes">
+<div class="max-w-3xl mx-auto">
+<h2 class="text-3xl font-serif text-center mb-12" style="">¿Tienes dudas?</h2>
+<div class="space-y-6">
+<div class="bg-white p-6 rounded-2xl">
+<h4 class="font-bold mb-2 flex items-center gap-2" style="">
+<span class="material-symbols-outlined text-primary" style="">help</span>
+                        No sé nada de plantas, ¿puedo usarlos?
+                    </h4>
+<p class="text-on-surface-variant text-sm" style="">¡Absolutamente! Nuestros productos vienen listos para usar y con guías simples. Diseñamos todo para que no tengas que preocuparte por las proporciones.</p>
+</div>
+<div class="bg-white p-6 rounded-2xl">
+<h4 class="font-bold mb-2 flex items-center gap-2" style="">
+<span class="material-symbols-outlined text-primary" style="">help</span>
+                        He probado otros productos y no funcionan.
+                    </h4>
+<p class="text-on-surface-variant text-sm" style="">La diferencia está en la calidad de los ingredientes y la microbiología viva. Huertos M&amp;M se enfoca en restaurar la salud del suelo, no solo dar un "golpe" de nitrógeno sintético.</p>
+</div>
+<div class="bg-white p-6 rounded-2xl">
+<h4 class="font-bold mb-2 flex items-center gap-2" style="">
+<span class="material-symbols-outlined text-primary" style="">help</span>
+                        No tengo tiempo para dedicarle.
+                    </h4>
+<p class="text-on-surface-variant text-sm" style="">Nuestros sustratos mantienen la humedad por más tiempo y nuestros nutrientes son de liberación lenta o aplicación rápida por riego. Menos mantenimiento, mejores resultados.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-24 px-8 bg-surface">
+<div class="max-w-5xl mx-auto bg-surface-container-highest rounded-[2.5rem] p-12 md:p-20 text-center relative overflow-hidden">
+<div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-secondary/10 rounded-full blur-3xl"></div>
+<h2 class="text-4xl md:text-5xl font-serif mb-6 relative z-10" style="">Empieza hoy a transformar tus plantas</h2>
+<p class="text-lg text-on-surface-variant mb-10 max-w-2xl mx-auto relative z-10" style="">
+                Únete a miles de personas que ya disfrutan de un jardín más verde, sano y libre de plagas con soluciones 100% orgánicas.
+            </p>
+<a class="inline-block bg-tertiary-fixed text-on-tertiary-fixed px-12 py-5 rounded-xl font-extrabold text-lg shadow-lg hover:shadow-xl hover:opacity-90 active:scale-95 transition-all relative z-10 duration-300 hover:-translate-y-1 hover:brightness-110" href="https://listado.mercadolibre.com.mx/_CustId_533338653?item_id=MLM2545384377&amp;category_id=MLM158043&amp;seller_id=533338653&amp;client=recoview-selleritems&amp;recos_listing=true#origin=upp&amp;component=seller&amp;typeSeller=classic" style="">
+                Comprar ahora
+            </a>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#fff2e3] dark:bg-[#252a22] w-full py-12 px-8">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-8">
+<div class="space-y-4">
+<div class="text-lg font-serif text-[#281800] dark:text-[#f2e0c9]" style="">Huertos M&amp;M</div>
+<p class="text-xs font-label uppercase tracking-widest text-[#40493d] dark:text-[#c1c9bc]" style="">© 2026 Huertos M&amp;M. Todos los derechos reservados.</p>
+</div>
+<div class="grid grid-cols-2 gap-12">
+<div class="space-y-4">
+<h6 class="text-[11px] uppercase tracking-widest font-bold opacity-50" style="">Redes Sociales</h6>
+<ul class="space-y-2">
+<li class="" style=""><a class="text-[#40493d] dark:text-[#c1c9bc] hover:text-[#0d631b] dark:hover:text-[#b1f49d] underline transition-all text-sm" href="#" style="">Instagram</a></li>
+<li class="" style=""><a class="text-[#40493d] dark:text-[#c1c9bc] hover:text-[#0d631b] dark:hover:text-[#b1f49d] underline transition-all text-sm" href="#" style="">Facebook</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h6 class="text-[11px] uppercase tracking-widest font-bold opacity-50" style="">Tienda</h6>
+<ul class="space-y-2">
+<li class="" style=""><a class="text-[#40493d] dark:text-[#c1c9bc] hover:text-[#0d631b] dark:hover:text-[#b1f49d] underline transition-all text-sm" href="https://listado.mercadolibre.com.mx/_CustId_533338653?item_id=MLM2545384377&amp;category_id=MLM158043&amp;seller_id=533338653&amp;client=recoview-selleritems&amp;recos_listing=true#origin=upp&amp;component=seller&amp;typeSeller=classic" style="">Tienda Mercado Libre</a></li>
+<li class="" style=""><a class="text-[#40493d] dark:text-[#c1c9bc] hover:text-[#0d631b] dark:hover:text-[#b1f49d] underline transition-all text-sm" href="#" style="">Soporte al cliente</a></li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
